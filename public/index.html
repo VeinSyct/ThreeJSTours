@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover,shrink-to-fit=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Full Screen">
+    <meta name="pinterest" content="nopin">
+    <meta name="referrer" content="origin">
+    <meta property="og:type" content="webapp">
+    <meta property="og:title" content="RealTours">
+    <meta property="og:description" content="The VIRTUAL TOUR brings your to the places online">
+    <meta property="og:image" content="assets/images/og.jpg">
+    <meta property="og:url" content="https://play.google.com/store/apps/details?id=com.vrrency.island">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Island">
+    <meta name="twitter:description" content="The VIRTUAL TOUR brings your to the places online">
+    <meta name="twitter:image" content="assets/images/og.jpg">
+    <meta name="twitter:url" content="https://play.google.com/store/apps/details?id=com.vrrency.island">
+    <meta name="description" content="The VIRTUAL TOUR brings your to the places online">
+    <meta name="application-name" content="RealTours">
+    <meta name="keywords" content=",virtual,experience,engine,game,currency,secure,message">
+    <meta name="author" content="VeinSyct">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png">
+    <title>RealTours</title>
+    <base href="">
+    <!--style-->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!--virtual tour methods-->
+    <script src="assets/js/vtmethods.js"></script>
+    <!--Firebase-->
+    <script onload="fbLdF=true" src="assets/js/firebase.js"></script>
+    <script src="assets/js/firebase-auth.js"></script>
+    <script src="assets/js/firebase-database.js"></script>
+    <script src="assets/js/firebase-analytics.js"></script>
+    <!--Dependencies-->
+    <script src="assets/js/jquery-3.6.0.min.js"></script>
+    <script>
+      document.onreadystatechange=()=>{
+        // Start engine
+        var loadJS=false
+        if(document.readyState==='complete'&&!loadJS){
+          loadJS=true
+          getOrientation()
+          try{
+            meAndF=AppInterface.isAndroid()
+          }catch(err){}
+          setTimeout(function(){
+            if(!lsRd('FirstRun'))history.back()
+          },7600)
+          for(i=0;i<uiAssets.length;i++)loadScript(uiAssets[i],'head','text/javascript')
+          loadScript('assets/js/vplayer.js','head','module')
+          setTimeout(function(){
+            tour=getParameters(getURL().tour)
+            $('body').css('background-image','url('+tour.splash+'),url(assets/images/background.jpg)')
+            function bottomlink(typ,url,pos,icon,size){
+              return `<a onmouseup="window.open(`+(typ=='mappin'?`gooMap('`:typ=='whatsapp'?`whApNo('`:`('`)+url+`'))">
+                  <img class="`+pos+`" src="assets/images/`+icon+`"
+                  width="`+size+`" height="`+size+`"/>
+                </a>`
+            }
+            if(tour.rightbottom)$('#rightbottom').html(bottomlink(tour.rightbottom.type,tour.rightbottom.url,'rightbottom',tour.rightbottom.icon,tour.rightbottom.size))
+            if(tour.leftbottom)$('#leftbottom').html(bottomlink(tour.leftbottom.type,tour.leftbottom.url,'leftbottom',tour.leftbottom.icon,tour.leftbottom.size))
+            librarySave(tour)
+            try{
+              if(appConnect())setTimeout(function(){
+                try{
+                  startApp()
+                }catch(err){location.reload()}
+              },lsRd('FirstRun')==null?2400:600)
+            }catch(err){location.reload()}
+          },lsRd('FirstRun')==null?2400:600)
+        }
+      }
+      $(document).ready(function(){
+        // Engine initialize
+      })
+      document.addEventListener("DOMContentLoaded",function(){
+        // System routines
+      })
+      function librarySave(tour){
+        if(tour.external===undefined){
+          if('serviceWorker' in navigator){
+            navigator.serviceWorker
+            .register(tour.library+'.js')
+            .then(function(registration){
+              $('#loadingFill').css('width','3%')
+            })
+            .catch((err)=>{
+              $('#loadingFill').css('width','0%')
+            })
+          }
+        }
+      }
+	  </script>
+  </head>
+  <body style="overflow:hidden;margin:0px;background-image:url(assets/images/background.jpg)">
+    <div class="appWindow">
+      <div hidden class="world" id="world"></div>
+      <img src="assets/images/welcome.png" onerror="$('#welcome').hide()" id="welcome"/>
+      <div hidden class="progressBar" id="loadingBar">
+        <div class="progressFill" id="loadingFill">
+          <div class="progressText" id="progressText">Loading...</div>
+        </div>
+      </div>
+    </div>
+    <span hidden>
+      <div id="calCulus"></div>
+    </span>
+    <div id="rightbottom"></div>
+    <div id="leftbottom"></div>
+  </body>
+</html>
