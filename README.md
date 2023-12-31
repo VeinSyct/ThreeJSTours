@@ -4,6 +4,6 @@ This source code allows 360 photos to be switched by clicking nodes to jump from
 
 You can add account to create your 360 virtual tours.
 
-[Live Demo](https://virtualtour.web.app)
+[Live Demo](https://virtualtour.web.app/#tours=retailcongressevent)
 
 [Source Code](https://sukinatin.web.app/merchandise.html?20230415175520&Virtual%20Tours%20-%20Source%20Code&Source)
